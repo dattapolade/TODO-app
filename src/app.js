@@ -6,7 +6,6 @@ const Task = require('./models/item');
 const app = express();
 
 app.use(express.static("./views"));
-app.use(express.urlencoded());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
@@ -21,7 +20,7 @@ app.get('/', function (req, res) {
             return;
         }
         return res.render('home', {
-            tittle: "Home",
+            tittle: "TODO App",
             task: task
         });
     }
@@ -45,7 +44,6 @@ app.post('/create-task', function (req, res) {
 app.get('/delete-task', function (req, res) {
     var id = req.query;
 
-    // checking the number of tasks selected to delete
     var count = Object.keys(id).length;
     for (let i = 0; i < count; i++) {
         Task.findByIdAndDelete(Object.keys(id)[i], function (err) {
